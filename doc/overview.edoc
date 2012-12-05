@@ -25,7 +25,7 @@
 leanbeef is a [cowboy](http://github.com/extend/cowboy.git) fork that
 aims to put back the simplicity in Cowboy and HTTP handling.
 
-leanbeaf is a small, fast and modular HTTP server written in Erlang.
+Cowboy is a small, fast and modular HTTP server written in Erlang.
 
 ## Goals
 
@@ -147,31 +147,32 @@ rules.
 
 To match the hostname and path, Cowboy requires a list of tokens. For
 example, to match the "ninenines.eu" domain name, you must specify
-`[<<"ninenines">>, <<"eu">>]'. Or, to match the "/path/to/my/resource"
-you must use `[<<"path">>, <<"to">>, <<"my">>, <<"resource">>]'. All the
+```[<<"ninenines">>, <<"eu">>]'''. Or, to match the "/path/to/my/resource"
+you must use ```[<<"path">>, <<"to">>, <<"my">>, <<"resource">>]'''. All the
 tokens must be given as binary.
 
-You can use the special token `'_'' (the atom underscore) to indicate
+You can use the special token `` '_' '' (the atom underscore) to indicate
 that you accept anything in that position. For example if you have both
 "ninenines.eu" and "ninenines.fr" domains, you can use the match spec
-`[<<"ninenines">>, '_']' to match any top level extension.
+```[<<"ninenines">>, '_']''' to match any top level extension.
 
 Finally, you can also match multiple leading segments of the domain name
 and multiple trailing segments of the request path using the atom
-`'...'' (the atom ellipsis) respectively as the first host token or the
-last path token. For example, host rule `['...', <<"ninenines">>, <<"eu">>]' can match both "cowboy.bugs.ninenines.eu" and "ninenines.eu"
-and path rule `[<<"projects">>, '...']' can match both "/projects" and
+`` '...' '' (the atom ellipsis) respectively as the first host token or the
+last path token. For example, host rule ```['...', <<"ninenines">>,<<"eu">>]''' 
+can match both "cowboy.bugs.ninenines.eu" and "ninenines.eu"
+and path rule ```[<<"projects">>, '...']''' can match both "/projects" and
 "/projects/cowboy/issues/42". The host leading segments and the path
 trailing segments can later be retrieved through
 `cowboy_req:host_info/1' and `cowboy_req:path_info/1'.
 
 Any other atom used as a token will bind the value to this atom when
-matching. To follow on our hostnames example, `[<<"ninenines">>, ext]'
-would bind the values `<<"eu">>' and `<<"fr">>' to the ext atom, that
+matching. To follow on our hostnames example, ```[<<"ninenines">>, ext]'''
+would bind the values ```<<"eu">>''' and ```<<"fr">>''' to the ext atom, that
 you can later retrieve in your handler by calling
 `cowboy_req:binding/{2,3}'.
 
-You can also accept any match spec by using the atom `'_'' directly
+You can also accept any match spec by using the atom `` '_' '' directly
 instead of a list of tokens. Our hello world example above uses this to
 forward all requests to a single handler.
 
