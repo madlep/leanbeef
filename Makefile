@@ -3,9 +3,13 @@
 PROJECT = cowboy
 
 DIALYZER = dialyzer
-REBAR = rebar
+REBAR?=rebar
+
+
 
 all: app
+
+dev: devbuild
 
 # Application.
 
@@ -20,14 +24,27 @@ clean:
 	rm -f test/*.beam
 	rm -f erl_crash.dump
 
-docs: clean-docs
-	@$(REBAR) doc skip_deps=true
+docs: clean-docs dev
+	@$(REBAR) -v -C rebar_dev.config doc skip_deps=true
 
 clean-docs:
 	rm -f doc/*.css
 	rm -f doc/*.html
 	rm -f doc/*.png
 	rm -f doc/edoc-info
+
+# development
+#
+devclean:
+	$(REBAR) -C rebar_dev.config clean
+
+devbuild: devdeps
+	$(REBAR) -C rebar_dev.config compile
+
+devdeps:
+	$(REBAR) -C rebar_dev.config get-deps
+
+
 
 # Tests.
 
